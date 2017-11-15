@@ -5,4 +5,4 @@ date: "November 13, 2017"
 output: html_document
 ---
 
-##This class is relevant to my life!
+##This class is relevant to my life!!
