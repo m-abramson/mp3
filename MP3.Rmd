@@ -12,14 +12,14 @@ db <- dbConnect_scidb(dbname = "imdb")
 
 ```{r}
 db %>%
-  dbGetQuery("SELECT t.id, title, kind_id, production_year, link_type_id  
+  dbGetQuery("SELECT COUNT(DISTINCT t.id) AS count, title, kind_id, link_type_id, production_year, m.info_type_id, m.info
 FROM title t
-JOIN movie_link m 
-ON t.id = linked_movie_id
-WHERE kind_id = 1;")
+JOIN movie_link ON t.id = linked_movie_id
+JOIN movie_info m ON t.id = m.movie_id
+WHERE kind_id = 1 AND link_type_id = 1
+GROUP BY production_year;") %>%
+ggplot(aes(x = production_year, y = count)) +
+	geom_line(size = 1)
 ```
-
-
-##This class is relevant to my life!!
 
 
