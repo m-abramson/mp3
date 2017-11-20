@@ -4,5 +4,22 @@ author: "Mathena Abramson"
 date: "November 13, 2017"
 output: html_document
 ---
+```{r}
+library(mdsr)
+library(RMySQL)
+db <- dbConnect_scidb(dbname = "imdb")
+```
+
+```{r}
+db %>%
+  dbGetQuery("SELECT t.id, title, kind_id, production_year, link_type_id  
+FROM title t
+JOIN movie_link m 
+ON t.id = linked_movie_id
+WHERE kind_id = 1;")
+```
+
 
 ##This class is relevant to my life!!
+
+
