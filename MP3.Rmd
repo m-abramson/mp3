@@ -11,14 +11,33 @@ db <- dbConnect_scidb(dbname = "imdb")
 ```
 
 ```{r}
-db %>%
-  dbGetQuery("SELECT DISTINCT t.id, title, kind_id, production_year, m.info_type_id, m.info 
+SQL <- "SELECT DISTINCT t.id, title, kind_id, production_year, m.info_type_id, m.info
 FROM title t
 JOIN movie_link ON t.id = linked_movie_id
 JOIN movie_info m ON t.id = m.movie_id
-WHERE kind_id = 1 AND info_type_id = 107 AND m.info LIKE '%(USA)' AND title LIKE 'Shrek'
-ORDER BY production_year;")
+WHERE kind_id = 1 AND info_type_id = 107 AND m.info LIKE '%(USA)'
+ORDER BY production_year;"
 ```
+
+```{r}
+sequel_movies <- function(title_arg) {
+db %>%
+  dbGetQuery(SQL) %>%
+    filter(title == title_arg) %>%
+ggplot(aes(x = production_year, y = info)) +
+    geom_line(size = 1) +
+    geom_area() +
+    labs(title = "Shrek",
+         x = "Year Sequel Released",
+         y = "Gross (U.S. Dollars)")}
+sequel_movies(title_arg = "Shrek")
+```
+
+
+
+
+
+
 
 
 
