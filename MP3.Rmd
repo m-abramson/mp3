@@ -12,10 +12,13 @@ db <- dbConnect_scidb(dbname = "imdb")
 
 ```{r}
 db %>%
-  dbGetQuery("SELECT t.id, title, kind_id, production_year, link_type_id  
+  dbGetQuery("SELECT DISTINCT t.id, title, kind_id, production_year, m.info_type_id, m.info 
 FROM title t
-JOIN movie_link m 
-ON t.id = linked_movie_id
-WHERE kind_id = 1;")
+JOIN movie_link ON t.id = linked_movie_id
+JOIN movie_info m ON t.id = m.movie_id
+WHERE kind_id = 1 AND info_type_id = 107 AND m.info LIKE '%(USA)' AND title LIKE 'Shrek'
+ORDER BY production_year;")
 ```
+
+
 
