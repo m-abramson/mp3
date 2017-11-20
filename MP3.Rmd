@@ -42,7 +42,6 @@ ggplot(aes(x = production_year, y = count)) +
        x = "Production Year",
        y = "Number of Sequels",
        caption = "(Data from IMDB)")
-  
 ```
 
 
